@@ -1,4 +1,4 @@
-class Atleta {
+class Turma {
     constructor(nomeAtleta, idadeAtleta) {
         this.nomeAtleta = nomeAtleta;
         this.idadeAtleta = idadeAtleta;
@@ -9,13 +9,13 @@ class Atleta {
     }
 }
 
-let arena = [];
+let turmas = [];
 
-let atleta1 = new Atleta("Cypher", 19);
+let turma1 = new Turma("Cypher", 19);
 
-arena.push(atleta1);
+turmas.push(turma1);
 
-atleta1.registrar();
+turma1.registrar();
 
-console.log("Atletas na arena:");
-console.log(arena);
+console.log("Turmas na arena:");
+console.log(turmas);
