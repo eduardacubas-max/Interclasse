@@ -1,36 +1,21 @@
-let turmas = [];
+class Atleta {
+    constructor(nomeAtleta, idadeAtleta) {
+        this.nomeAtleta = nomeAtleta;
+        this.idadeAtleta = idadeAtleta;
+    }
 
-function adicionarTurma(nome) {
-    let turma = {
-        id: turmas.length + 1,
-        nome: nome
-    };
-
-    turmas.push(turma);
-
-    console.log("Turma adicionada:", turma);
-}
-
-function listarTurmas() {
-    for (let i = 0; i < turmas.length; i++) {
-        console.log(turmas[i]);
+    registrar() {
+        console.log("Atleta registrado:", this.nomeAtleta);
     }
 }
 
-function removerTurma(id) {
-    turmas = turmas.filter(function(turma) {
-        return turma.id !== id;
-    });
+let arena = [];
 
-    console.log("Turma removida:", id);
-}
+let atleta1 = new Atleta("Cypher", 19);
 
-adicionarTurma("Turma A");
-adicionarTurma("Turma B");
-adicionarTurma("Turma C");
+arena.push(atleta1);
 
-listarTurmas();
+atleta1.registrar();
 
-removerTurma(2);
-
-listarTurmas();
+console.log("Atletas na arena:");
+console.log(arena);
