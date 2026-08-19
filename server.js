@@ -20,13 +20,32 @@ class Turma {
 Turma.proximoId = 1;
 
 class Atleta {
-    constructor(nomeAtleta, idadeAtleta) {
-        this.nomeAtleta = nomeAtleta;
-        this.idadeAtleta = idadeAtleta;
+    #nome;
+    #idTurma;
+
+    constructor(nome, idTurma) {
+        this.#nome = nome;
+        this.idTurma = idTurma;
+    }
+
+    get nome() {
+        return this.#nome;
+    }
+
+    get idTurma() {
+        return this.#idTurma;
+    }
+
+    set idTurma(novoIdTurma) {
+        if (!novoIdTurma || String(novoIdTurma).trim().length < 3) {
+            console.error("Erro: idTurma inválido! Não pode ser vazio e deve ter no mínimo 3 caracteres.");
+            return;
+        }
+        this.#idTurma = novoIdTurma;
     }
 
     registrar() {
-        console.log("Atleta registrado:", this.nomeAtleta);
+        console.log("Atleta registrado:", this.#nome, "| Turma ID:", this.#idTurma);
     }
 }
 
@@ -41,7 +60,6 @@ turmas.push(turma2);
 turmas.push(turma3);
 
 console.log("Turmas cadastradas:");
-
 for (let i = 0; i < turmas.length; i++) {
     turmas[i].listar();
 }
@@ -51,11 +69,13 @@ turmas = turmas.filter(function(turma) {
 });
 
 console.log("Depois de remover a turma 2:");
-
 for (let i = 0; i < turmas.length; i++) {
     turmas[i].listar();
 }
 
-let atleta1 = new Atleta("Cypher", 19);
-
+let atleta1 = new Atleta("Cypher", "T01");
 atleta1.registrar();
+
+console.log("Nome acessado via Getter:", atleta1.nome);
+
+atleta1.idTurma = "AB";
