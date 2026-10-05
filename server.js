@@ -1,81 +1,31 @@
-class Turma {
-    constructor(nome) {
-        this.id = Turma.proximoId++;
-        this.nome = nome;
-    }
+const ArenaConnect = require('./src/models/ArenaConnect');
+const MenuView = require('./src/views/MenuView');
 
-    adicionar() {
-        console.log("Turma adicionada:", this);
-    }
+function main() {
+    const sistema = ArenaConnect.getInstancia();
 
-    listar() {
-        console.log("Turma:", this);
-    }
-
-    remover() {
-        console.log("Turma removida:", this.id);
-    }
-}
-
-Turma.proximoId = 1;
-
-class Atleta {
-    #nome;
-    #idTurma;
-
-    constructor(nome, idTurma) {
-        this.#nome = nome;
-        this.idTurma = idTurma;
-    }
-
-    get nome() {
-        return this.#nome;
-    }
-
-    get idTurma() {
-        return this.#idTurma;
-    }
-
-    set idTurma(novoIdTurma) {
-        if (!novoIdTurma || String(novoIdTurma).trim().length < 3) {
-            console.error("Erro: idTurma inválido! Não pode ser vazio e deve ter no mínimo 3 caracteres.");
-            return;
+    while (true) {
+        const opcao = MenuView.mostrarMenu();
+        if (opcao === "1") sistema.adicionarTurma();
+        else if (opcao === "2") sistema.listarTurmas();
+        else if (opcao === "3") AtletaController.adicionarAtleta(sistema);
+        else if (opcao === "4") AtletaController.listarAtletas(sistema);
+        else if (opcao === "5") sistema.adicionarArbitro();
+        else if (opcao === "6") sistema.listarArbitros();
+        else if (opcao === "7") sistema.adicionarEquipe();
+        else if (opcao === "8") sistema.listarEquipes();
+        else if (opcao === "9") sistema.vincularAtletaEquipe();
+        else if (opcao === "10") sistema.desvincularAtletaEquipe();
+        else if (opcao === "11") sistema.removerEquipe();
+        else if (opcao === "0") {
+            sistema.salvarEstado();
+            console.log("Sistema encerrado e dados salvos com sucesso!");
+            break;
         }
-        this.#idTurma = novoIdTurma;
-    }
-
-    registrar() {
-        console.log("Atleta registrado:", this.#nome, "| Turma ID:", this.#idTurma);
+        else MenuView.mostrarOpcaoInvalida();
     }
 }
 
-let turmas = [];
-
-let turma1 = new Turma("Turma A");
-let turma2 = new Turma("Turma B");
-let turma3 = new Turma("Turma C");
-
-turmas.push(turma1);
-turmas.push(turma2);
-turmas.push(turma3);
-
-console.log("Turmas cadastradas:");
-for (let i = 0; i < turmas.length; i++) {
-    turmas[i].listar();
+if (require.main === module) {
+    main();
 }
-
-turmas = turmas.filter(function(turma) {
-    return turma.id !== 2;
-});
-
-console.log("Depois de remover a turma 2:");
-for (let i = 0; i < turmas.length; i++) {
-    turmas[i].listar();
-}
-
-let atleta1 = new Atleta("Cypher", "T01");
-atleta1.registrar();
-
-console.log("Nome acessado via Getter:", atleta1.nome);
-
-atleta1.idTurma = "AB";
