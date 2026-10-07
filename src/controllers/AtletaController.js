@@ -1,22 +1,36 @@
 const AtletaView = require("../views/AtletaView");
 
 const AtletaController = {
-    adicionar(sistema){
-        //Listar Turmas - TurmaView
+    adicionar(sistema) {
         const idTurma = AtletaView.perguntarIdTurma();
-        try{
+
+        try {
             sistema.buscarTurmaOuFalhar(idTurma);
+
             const nome = AtletaView.perguntarNome();
-            const { atleta , turma } = sistema.adicionarAtleta(idTurma, nome)
-            AtletaView.mostrarAtletaVinculado(atleta.nome, turma.nome)
-        } catch(erro) {
-            AtletaView.mostrarErroCadastro(erro.message)
+
+            const { atleta, turma } =
+                sistema.adicionarAtleta(
+                    idTurma,
+                    nome
+                );
+
+            AtletaView.mostrarAtletaVinculado(
+                atleta.nome,
+                turma.nome
+            );
+        } catch (erro) {
+            AtletaView.mostrarErroCadastro(
+                erro.message
+            );
         }
     },
 
     listar(sistema) {
-        AtletaView.listar(sistema.listarAtletas());
-    },
+        AtletaView.listar(
+            sistema.listarAtletas()
+        );
+    }
 };
 
 module.exports = AtletaController;

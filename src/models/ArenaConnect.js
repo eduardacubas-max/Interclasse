@@ -40,8 +40,12 @@ class ArenaConnect {
 
         try {
             this.turmas.push(
-                CadastroFactory.criarTurma(this.idTurmaContador, nome)
+                CadastroFactory.criarTurma(
+                    this.idTurmaContador,
+                    nome
+                )
             );
+
             this.idTurmaContador++;
         } catch (erro) {
             console.log(`✖ Turma não registrada: ${erro.message}`);
@@ -59,7 +63,9 @@ class ArenaConnect {
     }
 
     buscarTurmaOuFalhar(idTurma) {
-        const turma = this.turmas.find(t => t.id === idTurma);
+        const turma = this.turmas.find(
+            t => t.id === idTurma
+        );
 
         if (!turma) {
             throw new Error(`Turma com ID ${idTurma} não existe.`);
@@ -69,7 +75,9 @@ class ArenaConnect {
     }
 
     buscarAtletaOuFalhar(idAtleta) {
-        const atleta = this.atletas.find(a => a.id === idAtleta);
+        const atleta = this.atletas.find(
+            a => a.id === idAtleta
+        );
 
         if (!atleta) {
             throw new Error(`Atleta com ID ${idAtleta} não existe.`);
@@ -79,7 +87,9 @@ class ArenaConnect {
     }
 
     buscarEquipeOuFalhar(idEquipe) {
-        const equipe = this.equipes.find(e => e.id === idEquipe);
+        const equipe = this.equipes.find(
+            e => e.id === idEquipe
+        );
 
         if (!equipe) {
             throw new Error(`Equipe com ID ${idEquipe} não existe.`);
@@ -100,20 +110,29 @@ class ArenaConnect {
         this.idAtletaContador++;
         this.atletas.push(novoAtleta);
 
-        return { atleta: novoAtleta, turma };
+        return {
+            atleta: novoAtleta,
+            turma
+        };
     }
 
     listarAtletas() {
         return this.atletas.map(atleta => ({
             atleta,
-            nomeTurma: this.turmas.find(t => t.id === atleta.idTurma)?.nome ?? 'Turma não encontrada'
+            nomeTurma: this.turmas.find(
+                t => t.id === atleta.idTurma
+            )?.nome ?? 'Turma não encontrada'
         }));
     }
 
     adicionarArbitro() {
         const nome = prompt("Nome do Árbitro: ");
-        const numeroCredencial = parseInt(prompt("Número de Credencial: "));
-        const anosExperiencia = parseInt(prompt("Anos de Experiência: "));
+        const numeroCredencial = parseInt(
+            prompt("Número de Credencial: ")
+        );
+        const anosExperiencia = parseInt(
+            prompt("Anos de Experiência: ")
+        );
 
         try {
             const novoArbitro = CadastroFactory.criarArbitro(
@@ -144,14 +163,18 @@ class ArenaConnect {
 
     equipeJaExiste(idTurma, modalidade) {
         return this.equipes.some(
-            e => e.idTurma === idTurma && e.modalidade === modalidade
+            e =>
+                e.idTurma === idTurma &&
+                e.modalidade === modalidade
         );
     }
 
     adicionarEquipe() {
         this.listarTurmas();
 
-        const idT = parseInt(prompt("ID da Turma: "));
+        const idT = parseInt(
+            prompt("ID da Turma: ")
+        );
 
         try {
             const turma = this.buscarTurmaOuFalhar(idT);
@@ -185,7 +208,9 @@ class ArenaConnect {
                 `✔ Equipe registrada: ${turma.nome} em "${modalidade}"!`
             );
         } catch (erro) {
-            console.log(`✖ Equipe não registrada: ${erro.message}`);
+            console.log(
+                `✖ Equipe não registrada: ${erro.message}`
+            );
         }
     }
 
@@ -197,10 +222,16 @@ class ArenaConnect {
         }
 
         this.equipes.forEach(e => {
-            const turma = this.turmas.find(t => t.id === e.idTurma);
+            const turma = this.turmas.find(
+                t => t.id === e.idTurma
+            );
 
             const nomesAtletas = e.atletas
-                .map(idA => this.atletas.find(a => a.id === idA))
+                .map(
+                    idA => this.atletas.find(
+                        a => a.id === idA
+                    )
+                )
                 .filter(a => a)
                 .map(a => a.nome);
 
@@ -214,7 +245,9 @@ class ArenaConnect {
     removerEquipe() {
         this.listarEquipes();
 
-        const idE = parseInt(prompt("ID da Equipe a remover: "));
+        const idE = parseInt(
+            prompt("ID da Equipe a remover: ")
+        );
 
         try {
             const equipe = this.buscarEquipeOuFalhar(idE);
@@ -227,21 +260,28 @@ class ArenaConnect {
                 `✔ Equipe removida. Os atletas continuam no sistema (total de atletas: ${this.atletas.length}).`
             );
         } catch (erro) {
-            console.log(`✖ Não foi possível remover: ${erro.message}`);
+            console.log(
+                `✖ Não foi possível remover: ${erro.message}`
+            );
         }
     }
 
     vincularAtletaEquipe() {
         this.listarEquipes();
 
-        const idE = parseInt(prompt("ID da Equipe: "));
+        const idE = parseInt(
+            prompt("ID da Equipe: ")
+        );
 
         try {
             const equipe = this.buscarEquipeOuFalhar(idE);
 
             this.listarAtletas();
 
-            const idA = parseInt(prompt("ID do Atleta: "));
+            const idA = parseInt(
+                prompt("ID do Atleta: ")
+            );
+
             const atleta = this.buscarAtletaOuFalhar(idA);
 
             if (atleta.idTurma !== equipe.idTurma) {
@@ -260,7 +300,9 @@ class ArenaConnect {
                 `✔ ${atleta.nome} vinculado à equipe de "${equipe.modalidade}"!`
             );
         } catch (erro) {
-            console.log(`✖ Não foi possível vincular: ${erro.message}`);
+            console.log(
+                `✖ Não foi possível vincular: ${erro.message}`
+            );
         }
     }
 
@@ -350,8 +392,12 @@ class ArenaConnect {
     listarPartidas() {
         return this.partidas.map(partida => ({
             partida,
-            nomeEquipeA: this.#rotularEquipe(partida.idEquipeA),
-            nomeEquipeB: this.#rotularEquipe(partida.idEquipeB)
+            nomeEquipeA: this.#rotularEquipe(
+                partida.idEquipeA
+            ),
+            nomeEquipeB: this.#rotularEquipe(
+                partida.idEquipeB
+            )
         }));
     }
 
@@ -360,7 +406,9 @@ class ArenaConnect {
 
         const modalidades = [
             ...new Set(
-                this.equipes.map(equipe => equipe.modalidade)
+                this.equipes.map(
+                    equipe => equipe.modalidade
+                )
             )
         ];
 
@@ -376,7 +424,7 @@ class ArenaConnect {
 
                 return {
                     idEquipe: equipe.id,
-                    equipe: turma ? turma.nome : '?',
+                    equipe: `${turma ? turma.nome : '?'} (${equipe.modalidade})`,
                     pontos: 0,
                     jogos: 0,
                     vitorias: 0,
@@ -388,17 +436,21 @@ class ArenaConnect {
                 };
             });
 
-            const partidasDaModalidade = this.partidas.filter(
-                partida => partida.modalidade === modalidade
-            );
+            const partidasDaModalidade =
+                this.partidas.filter(
+                    partida =>
+                        partida.modalidade === modalidade
+                );
 
             partidasDaModalidade.forEach(partida => {
                 const linhaA = linhas.find(
-                    linha => linha.idEquipe === partida.idEquipeA
+                    linha =>
+                        linha.idEquipe === partida.idEquipeA
                 );
 
                 const linhaB = linhas.find(
-                    linha => linha.idEquipe === partida.idEquipeB
+                    linha =>
+                        linha.idEquipe === partida.idEquipeB
                 );
 
                 if (!linhaA || !linhaB) {
@@ -427,7 +479,6 @@ class ArenaConnect {
                 } else {
                     linhaA.pontos++;
                     linhaB.pontos++;
-
                     linhaA.empates++;
                     linhaB.empates++;
                 }
@@ -523,11 +574,17 @@ class ArenaConnect {
         }
 
         const dados = JSON.parse(
-            fs.readFileSync(ARQUIVO_DADOS, 'utf-8')
+            fs.readFileSync(
+                ARQUIVO_DADOS,
+                'utf-8'
+            )
         );
 
         this.turmas = (dados.turmas || []).map(
-            t => CadastroFactory.criarTurma(t.id, t.nome)
+            t => CadastroFactory.criarTurma(
+                t.id,
+                t.nome
+            )
         );
 
         this.atletas = (dados.atletas || []).map(
@@ -555,7 +612,8 @@ class ArenaConnect {
             );
 
             (e.atletas || []).forEach(
-                idAtleta => equipe.adicionarAtleta(idAtleta)
+                idAtleta =>
+                    equipe.adicionarAtleta(idAtleta)
             );
 
             return equipe;
@@ -572,11 +630,20 @@ class ArenaConnect {
             )
         );
 
-        this.idTurmaContador = dados.idTurmaContador || 1;
-        this.idAtletaContador = dados.idAtletaContador || 1;
-        this.idArbitroContador = dados.idArbitroContador || 1;
-        this.idEquipeContador = dados.idEquipeContador || 1;
-        this.idPartidaContador = dados.idPartidaContador || 1;
+        this.idTurmaContador =
+            dados.idTurmaContador || 1;
+
+        this.idAtletaContador =
+            dados.idAtletaContador || 1;
+
+        this.idArbitroContador =
+            dados.idArbitroContador || 1;
+
+        this.idEquipeContador =
+            dados.idEquipeContador || 1;
+
+        this.idPartidaContador =
+            dados.idPartidaContador || 1;
 
         console.log(
             `✔ Estado carregado: ${this.turmas.length} turma(s), ${this.atletas.length} atleta(s), ${this.equipes.length} equipe(s), ${this.partidas.length} partida(s).`

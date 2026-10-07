@@ -1,8 +1,9 @@
 const prompt = require('prompt-sync')();
+
 const MenuView = {
     mostrarMenu() {
 
-    console.log(`
+        console.log(`
 ==============================
 ARENA-CONNECT v3.0
 ==============================
@@ -17,13 +18,18 @@ ARENA-CONNECT v3.0
 9. Vincular Atleta à Equipe
 10. Desvincular Atleta da Equipe
 11. Remover Equipe
+12. Registrar Partida
+13. Listar Partidas
+14. Ver Classificação
 0. Sair
 ==============================`);
-    return prompt("Escolha: ");
+
+        return prompt("Escolha: ");
     },
+
     mostrarOpcaoInvalida() {
-        console.log("Opção Invalida!")
+        console.log("Opção Invalida!");
     }
 };
 
-module.exports = MenuView;    
+module.exports = MenuView;
