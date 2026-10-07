@@ -1,18 +1,36 @@
-const { Atleta } = require('./Pessoa');
-const Equipe = require('./Equipe');
+const Modalidade = require('./Modalidade');
+const { Atleta, Arbitro } = require('./Pessoa');
 const Turma = require('./Turma');
+const Equipe = require('./Equipe');
 
 class CadastroFactory {
-    static criarTurma(idTurma, nome) {
-        return new Turma(idTurma, nome);
+    static criarTurma(id, nome) {
+        const turma = new Turma(id, nome);
+        if (!turma.nome) throw new Error('Nome de turma inválido.');
+        return turma;
     }
 
-    static criarAtleta(idAtleta, nome, idTurma) {
-        return new Atleta(idAtleta, nome, idTurma);
+    static criarAtleta(id, nome, idTurma) {
+        const atleta = new Atleta(id, nome, idTurma);
+        if (!atleta.nome) throw new Error('Nome de atleta inválido.');
+        if (atleta.idTurma === undefined) throw new Error('Turma do atleta inválida.');
+        return atleta;
+    }
+    static criarEquipe(id, idTurma, modalidade) {
+        const equipe = new Equipe(id, idTurma, modalidade);
+        if (equipe.idTurma === undefined) throw new Error('Turma da equipe inválida.');
+        if (!equipe.modalidade) {
+            throw new Error(`Modalidade inválida. Use uma de: ${Object.values(Modalidade).join(', ')}.`);
+        }
+        return equipe;
     }
 
-    static criarEquipe(idEquipe, idTurma, modalidade) {
-        return new Equipe(idEquipe, idTurma, modalidade);
+    static criarArbitro(id, nome, numeroCredencial, anosExperiencia) {
+        const arbitro = new Arbitro(id, nome, numeroCredencial, anosExperiencia);
+        if (!arbitro.nome) throw new Error('Nome de árbitro inválido.');
+        if (arbitro.numeroCredencial === undefined) throw new Error('Número de credencial inválido.');
+        if (arbitro.anosExperiencia === undefined) throw new Error('Anos de experiência inválidos.');
+        return arbitro;
     }
 }
 
