@@ -8,10 +8,10 @@ class Partida {
     #placar;
 
     constructor(id, idEquipeA, idEquipeB, modalidade, golsA, golsB) {
-        this.#id = id.
-            this.idEquipeA = idEquipeA;
-        this.idEquipeB = idEquipeB,
-            this.modalidade = modalidade;
+        this.#id = id;
+        this.idEquipeA = idEquipeA;
+        this.idEquipeB = idEquipeB;
+        this.modalidade = modalidade;
         this.#placar = new Placar(golsA, golsB);
     }
 
@@ -21,30 +21,36 @@ class Partida {
 
     set idEquipeA(valor) {
         if (!Number.isInteger(valor) || valor < 0) {
-            console.log('[ERRO] ID da equipe A inválidos. Acesso negado')
+            console.log('[ERRO] ID da equipe A inválido. Acesso negado');
             return;
         }
+
         this.#idEquipeA = valor;
     }
+
     get idEquipeA() {
-        return this.idEquipeA
+        return this.#idEquipeA;
     }
+
     set idEquipeB(valor) {
         if (!Number.isInteger(valor) || valor < 0) {
-            console.log('[ERRO] ID da equipe B inválidos. Acesso negado')
+            console.log('[ERRO] ID da equipe B inválido. Acesso negado');
             return;
         }
+
         this.#idEquipeB = valor;
     }
+
     get idEquipeB() {
-        return this.idEquipeB
+        return this.#idEquipeB;
     }
 
     set modalidade(valor) {
         if (!valor) {
-            console.log('[ERRO] modalidade da partida invalida. Acesso Negado')
-            return
+            console.log('[ERRO] Modalidade da partida inválida. Acesso negado');
+            return;
         }
+
         this.#modalidade = valor;
     }
 
@@ -56,8 +62,15 @@ class Partida {
         return this.#placar;
     }
 
-    exibir(nomeEquipeA, nomeEquipeB) {
-        console.log(`ID: ${this.id} | ${nomeEquipeA} ${this.placar.golsA} x ${this.placar.golsB} ${nomeEquipeB} | ${this.modalidade}`);
+    vencedor() {
+        return this.#placar.vencedor();
     }
 
+    exibir(nomeEquipeA, nomeEquipeB) {
+        console.log(
+            `ID: ${this.id} | ${nomeEquipeA} ${this.placar.golsA} x ${this.placar.golsB} ${nomeEquipeB} | ${this.modalidade}`
+        );
+    }
 }
+
+module.exports = Partida;

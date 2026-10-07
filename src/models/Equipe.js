@@ -26,10 +26,31 @@ class Equipe {
         return this.#atletas;
     }
 
+    adicionarAtleta(idAtleta) {
+        if (this.#atletas.includes(idAtleta)) {
+            return false;
+        }
+
+        this.#atletas.push(idAtleta);
+        return true;
+    }
+
+    removerAtleta(idAtleta) {
+        const indice = this.#atletas.indexOf(idAtleta);
+
+        if (indice === -1) {
+            return false;
+        }
+
+        this.#atletas.splice(indice, 1);
+        return true;
+    }
+
     exibir(turma) {
         console.log(
             `ID: ${this.id} | Turma: ${turma} | Modalidade: ${this.modalidade} | Atletas: ${this.atletas.length}`
         );
     }
 }
-module.exports = Equipe
+
+module.exports = Equipe;

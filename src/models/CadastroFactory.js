@@ -2,6 +2,7 @@ const Modalidade = require('./Modalidade');
 const { Atleta, Arbitro } = require('./Pessoa');
 const Turma = require('./Turma');
 const Equipe = require('./Equipe');
+const Partida = require('./Partida');
 
 class CadastroFactory {
     static criarTurma(id, nome) {
@@ -32,6 +33,9 @@ class CadastroFactory {
         if (arbitro.anosExperiencia === undefined) throw new Error('Anos de experiência inválidos.');
         return arbitro;
     }
+    static criarPartida(id, idEquipeA, idEquipeB, modalidade, golsA, golsB) {
+    return new Partida(id, idEquipeA, idEquipeB, modalidade, golsA, golsB);
+}
 }
 
 module.exports = CadastroFactory;
